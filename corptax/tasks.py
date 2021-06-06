@@ -1,5 +1,5 @@
 from calendar import monthrange
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, timezone
 from functools import lru_cache
 from typing import Optional, Union
 
@@ -45,7 +45,7 @@ def update_corps_in_corp_settings():
         if not settings:
             corp_name = corp.corporation_name
             logger.info(f'Creating entry in CorpTaxSettings for {corp_name}')
-            settings = CorpTaxSettings(corp=corp, tax_rate=None, taxed=False)
+            settings = CorpTaxSettings(corp=corp, taxed_at=None, taxed=False)
             settings.save()
             logger.info(f'Successfully created entry in CorpTaxSettings for {corp_name}')
 
@@ -89,7 +89,7 @@ def _get_corp_tax_rate_for_day(corp: EveCorporationInfo, day: Union[datetime, da
 @shared_task
 def update_tax_owed(month: int, year: Optional[int] = None):
     _get_corp_tax_rate_for_day.cache_clear()  # Clear the cache so that DB updates are handled
-    month = datetime(year=datetime.today().year if year is None else year, month=month, day=1)
+    month = datetime(year=datetime.today().year if year is None else year, month=month, day=1, tzinfo=timezone.utc)
     end_of_month = month + timedelta(days=monthrange(month.year, month.month)[1])
     for corp_settings in CorpTaxSettings.objects.filter(taxed=True, taxed_at__isnull=False):
         logger.info(f'Processing tax owed for corp {corp_settings.corp.corporation_name}')
