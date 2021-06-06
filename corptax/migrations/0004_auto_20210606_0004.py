@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Corptax', '0003_auto_20210605_2338'),
+        ('corptax', '0003_auto_20210605_2338'),
     ]
 
     operations = [

@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('eveonline', '0014_auto_20210105_1413'),
-        ('Corptax', '0002_auto_20210605_2304'),
+        ('corptax', '0002_auto_20210605_2304'),
     ]
 
     operations = [

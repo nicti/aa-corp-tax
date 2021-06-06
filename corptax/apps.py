@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 class CorptaxConfig(AppConfig):
     name = "corptax"
-    label = "Corptax"
+    label = "corptax"
     verbose_name = "Corptax"
