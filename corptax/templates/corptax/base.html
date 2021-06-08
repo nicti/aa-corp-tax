@@ -1,12 +1,35 @@
 {% extends 'allianceauth/base.html' %}
 {% load i18n %}
 
-{% block page_title %}{% translate "example" %}{% endblock %}
-
+{% block page_title %}{% translate "Corp Tax" %}{% endblock %}
 {% block content %}
-    <div class="allianceauth-example-plugin">
-        <h1 class="page-header text-center">{% translate "example" %}</h1>
+    <br>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {% if perms.corptax.basic_access or perms.corptax.admin_access %}
+                        <li class=>
+                            <a href="{% url 'corptax:index' %}">Overview</a>
+                        <li>
+                    {% endif %}
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    {% if perms.corptax.admin_access %}
+                     <li><a class="" href="{% url 'corptax:admin' %}">Corp Management</a></li>
 
+                    {% endif %}
+                    {% if perms.corptax.admin_access %}
+                     <li><a class="" href="{% url 'corptax:settings' %}">Settings</a></li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+    <div class="allianceauth-corptax">
         {% block details %}{% endblock %}
     </div>
 {% endblock %}

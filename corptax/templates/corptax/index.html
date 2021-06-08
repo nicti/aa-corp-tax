@@ -5,11 +5,23 @@
 {% block details %}
 
     <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">text</h3>
-        </div>
         <div class="panel-body" style="min-height: 100px;">
-            {{ text }}
+            <table>
+                <tr>
+                    <th>Corp</th>
+                    <th>Month Starting</th>
+                    <th>ISK Owed</th>
+                    <th>Paid</th>
+                </tr>
+                {% for corp_name, month, isk_owed, paid in corp_tax_data %}
+                <tr>
+                    <td>{{ corp_name }}</td>
+                    <td>{{ month }}</td>
+                    <td>{{ isk_owed }}</td>
+                    <td>{{ paid }}</td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 

@@ -38,6 +38,6 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
-    python_requires="~=3.6",
+    python_requires="~=3.9",
     install_requires=["allianceauth>=2.8.2"],
 )
