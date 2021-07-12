@@ -107,3 +107,11 @@ def update_tax_owed(month: int, year: Optional[int] = None):
 
         corp_tax_owed, created = CorpTaxOwed.objects.update_or_create(corp=corp_settings.corp, month=month, defaults={'isk_owed': total_owed})
         logger.info(corp_tax_owed)
+
+
+@shared_task
+def update_tax_owed_current_month():
+    now = datetime.now().date()
+    current_month = now.month
+    current_year = now.year
+    update_tax_owed(current_month, current_year)
