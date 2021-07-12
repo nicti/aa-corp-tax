@@ -1,0 +1,46 @@
+{% extends 'corptax/base.html' %}
+{% load i18n %}
+{% load humanize %}
+
+{% block details %}
+
+    <script>
+    function serializeForm() {
+        var jsonData = $('form').serializeArray();
+        $.post('{% url 'corptax:settings' %}', jsonData)
+    }
+
+    </script>
+    <div class="panel panel-primary">
+        <form id="settingsform" method="post">
+            {% csrf_token %}
+            <div class="panel-body" style="min-height: 100px;">
+                <table>
+                    <tr>
+                        <th>Corp</th>
+                        <th>Taxed At %</th>
+                        <th>Is Taxed</th>
+                    </tr>
+                    {% for corp_name, taxed_at, is_taxed in corp_tax_data %}
+                    <tr>
+                        <td>{{ corp_name }}</td>
+                        <td><input type="text" name="{{corp_name}}.taxrate" value="{{ taxed_at }}"></td>
+                        <td><input type="checkbox" name="{{corp_name}}.is_taxed" {%  if is_taxed  %}checked{%  endif %}></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <input id='btnSerialise' type="button" value="Submit" onclick="serializeForm()">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block extra_javascript %}
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_script %}
+{% endblock %}

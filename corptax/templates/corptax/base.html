@@ -16,13 +16,13 @@
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     {% if perms.corptax.admin_access %}
-                     <li><a class="" href="{% url 'corptax:admin' %}">Corp Management</a></li>
+                     <li><a class="" href="{% url 'corptax:settings' %}">Corp Management</a></li>
 
                     {% endif %}
-                    {% if perms.corptax.admin_access %}
-                     <li><a class="" href="{% url 'corptax:settings' %}">Settings</a></li>
-
-                    {% endif %}
+{#                    {% if perms.corptax.admin_access %}#}
+{#                     <li><a class="" href="{% url 'corptax:settings' %}">Settings</a></li>#}
+{##}
+{#                    {% endif %}#}
 
                 </ul>
             </div>

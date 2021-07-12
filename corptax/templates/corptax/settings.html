@@ -1,0 +1,47 @@
+{% extends 'corptax/base.html' %}
+{% load i18n %}
+{% load humanize %}
+
+{% block details %}
+
+    <div class="panel panel-primary">
+        <div class="panel-body" style="min-height: 100px;">
+            <table>
+                <tr>
+                    <th>Corp</th>
+                    <th>Month Starting</th>
+                    <th>ISK Owed</th>
+                    <th>Paid</th>
+                </tr>
+                {% for corp_name, month, isk_owed, paid in corp_tax_data %}
+                <tr>
+                    <td>{{ corp_name }}</td>
+                    <td>{{ month }}</td>
+                    <td>{{ isk_owed }}</td>
+                    <td>{{ paid }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_javascript %}
+<script>
+
+  function serializeForm()
+  {
+    var jsonData = $('form').serializeArray();
+    var jsonString = JSON.stringify(jsonData);
+    $('#result').html(jsonString);
+  }
+
+</script>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_script %}
+{% endblock %}
