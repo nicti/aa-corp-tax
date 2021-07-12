@@ -6,8 +6,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    replaces = [('corptax', '0001_initial'), ('corptax', '0002_auto_20210605_2304'), ('corptax', '0003_auto_20210605_2338'), ('corptax', '0004_auto_20210606_0004'), ('corptax', '0005_auto_20210606_0044')]
-
     initial = True
 
     dependencies = [
