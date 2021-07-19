@@ -30,7 +30,11 @@ class SettingsView(View):
 
     def get(self, request):
         raw_data = CorpTaxSettings.objects.all()
-        data = [[item.corp.corporation_name, str(item.taxed_at * 100), item.taxed] for item in raw_data]
+        data = [[
+            item.corp.corporation_name,
+            str(item.taxed_at * 100) if item.taxed_at is not None else '0.0',
+            item.taxed
+        ] for item in raw_data]
         return render(request, "corptax/admin.html", context={'corp_tax_data': data})
 
     def post(self, request):
@@ -52,7 +56,7 @@ class SettingsView(View):
         """
         rv = defaultdict(dict)
         for key, value in post_data.items():
-            keys = key.split('.')  # TODO need to account for corps with . in the name...
+            keys = key.split('__*__')
             if len(keys) == 1:
                 continue
             if keys[1] == 'is_taxed' and value == 'on':
