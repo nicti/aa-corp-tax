@@ -35,8 +35,16 @@ class SettingsView(View):
 
     def post(self, request):
         post_data = request.POST
-        logger.info(post_data)
+        clean_post_data = self._cleanup_post_data(post_data)
+        self.update_settings(clean_post_data)
         return self.get(request)
+
+    def update_settings(self, settings: dict):
+        for corp, details in settings.items():
+            corp_settings: CorpTaxSettings = CorpTaxSettings.objects.get(corp__corporation_name=corp)
+            corp_settings.taxed = details.get('is_taxed', False)
+            corp_settings.taxed_at = details.get('taxrate', 0.0)
+            corp_settings.save()
 
     def _cleanup_post_data(self, post_data: dict):
         """
@@ -47,5 +55,9 @@ class SettingsView(View):
             keys = key.split('.')  # TODO need to account for corps with . in the name...
             if len(keys) == 1:
                 continue
+            if keys[1] == 'is_taxed' and value == 'on':
+                value = True
+            if keys[1] == 'taxrate':
+                value = float(value) / 100
             rv[keys[0]][keys[1]] = value
         return rv
