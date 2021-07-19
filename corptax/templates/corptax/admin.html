@@ -24,8 +24,8 @@
                     {% for corp_name, taxed_at, is_taxed in corp_tax_data %}
                     <tr>
                         <td>{{ corp_name }}</td>
-                        <td><input type="text" name="{{corp_name}}.taxrate" value="{{ taxed_at }}"></td>
-                        <td><input type="checkbox" name="{{corp_name}}.is_taxed" {%  if is_taxed  %}checked{%  endif %}></td>
+                        <td><input type="text" name="{{corp_name}}__*__taxrate" value="{{ taxed_at }}"></td>
+                        <td><input type="checkbox" name="{{corp_name}}__*__is_taxed" {%  if is_taxed  %}checked{%  endif %}></td>
                     </tr>
                     {% endfor %}
                 </table>
