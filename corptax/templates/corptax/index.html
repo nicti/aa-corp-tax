@@ -3,10 +3,10 @@
 {% load humanize %}
 
 {% block details %}
-
+    <input type="text" id="filterTableInput" onkeyup="filterTable()" placeholder="Search for items" title="Filter">
     <div class="panel panel-primary">
         <div class="panel-body" style="min-height: 100px;">
-            <table>
+            <table id="corpTable">
                 <tr>
                     <th>Corp</th>
                     <th>Month Starting</th>
@@ -28,9 +28,52 @@
 {% endblock %}
 
 {% block extra_javascript %}
+<script>
+    function filterTable() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("filterTableInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("corpTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
 {% endblock %}
 
 {% block extra_css %}
+<style>
+#corpTable {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+  
+  #corpTable th, #corpTable td {
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+  }
+  
+  #corpTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #corpTable tr.header, #corpTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+  }
+</style>
 {% endblock %}
 
 {% block extra_script %}

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 @permission_required("corptax.basic_access")
 def index(request):
     raw_data = CorpTaxOwed.objects.all()  # TODO filter based on what they are allowed to see?
-    data = [[item.corp.corporation_name, item.month.strftime('%b, %Y'), item.isk_owed, item.paid] for item in raw_data]
+    data = [[item.corp.corporation_name, item.month.strftime('1 %b, %Y'), f'{item.isk_owed:,}', item.paid] for item in raw_data]
     return render(request, "corptax/index.html", context={'corp_tax_data': data})
 
 
