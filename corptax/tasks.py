@@ -50,7 +50,7 @@ def update_corps_in_corp_settings():
             logger.info(f'Successfully created entry in CorpTaxSettings for {corp_name}')
 
 
-@lru_cache(maxsize=128)
+# @lru_cache(maxsize=128)
 def _get_corp_tax_rate_for_day(corp: EveCorporationInfo, day: Union[datetime, date], strict: bool = False) -> float:
     """
     Returns the tax rate of the corp on this day. If `strict` is set to False and no tax rate is found for the given day
@@ -88,7 +88,7 @@ def _get_corp_tax_rate_for_day(corp: EveCorporationInfo, day: Union[datetime, da
 
 @shared_task
 def update_tax_owed(month: int, year: Optional[int] = None):
-    _get_corp_tax_rate_for_day.cache_clear()  # Clear the cache so that DB updates are handled
+    # _get_corp_tax_rate_for_day.cache_clear()  # Clear the cache so that DB updates are handled
     month = datetime(year=datetime.today().year if year is None else year, month=month, day=1, tzinfo=timezone.utc)
     end_of_month = month + timedelta(days=monthrange(month.year, month.month)[1])
     for corp_settings in CorpTaxSettings.objects.filter(taxed=True, taxed_at__isnull=False):
