@@ -50,8 +50,7 @@ def update_corps_in_corp_settings():
             logger.info(f'Successfully created entry in CorpTaxSettings for {corp_name}')
 
 
-# TODO is caching a good idea if value is None?
-# @lru_cache
+@lru_cache(maxsize=128)
 def _get_corp_tax_rate_for_day(corp: EveCorporationInfo, day: Union[datetime, date], strict: bool = False) -> float:
     """
     Returns the tax rate of the corp on this day. If `strict` is set to False and no tax rate is found for the given day
