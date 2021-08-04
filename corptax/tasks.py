@@ -97,11 +97,14 @@ def update_tax_owed(month: int, year: Optional[int] = None):
         total_owed = 0
         for wallet_entry in CorporationWalletJournalEntry.objects.filter(
                 tax_receiver_id=corp_id,
-                ref_type='bounty_prizes',
+                ref_type__in=['bounty_prizes', 'agent_mission_reward', 'ess_escrow_transfer', 'corporate_reward_payout'],
                 date__gte=month,
                 date__lt=end_of_month
         ).order_by('date'):
             tax_rate = _get_corp_tax_rate_for_day(corp_settings.corp, wallet_entry.date.date())
+            if tax_rate == 0:
+                logger.error(f'{corp_settings.corp} has a tax rate of 0')
+                break  # TODO tf do we do here?
             share_of_tax_owed_to_alliance = min(1.0, corp_settings.taxed_at/tax_rate)
             total_owed += float(wallet_entry.amount) * share_of_tax_owed_to_alliance
 
