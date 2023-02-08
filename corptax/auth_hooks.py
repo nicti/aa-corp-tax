@@ -1,5 +1,3 @@
-from django.utils.translation import ugettext_lazy as _
-
 from allianceauth import hooks
 from allianceauth.services.hooks import MenuItemHook, UrlHook
 
@@ -13,7 +11,7 @@ class CorptaxMenuItem(MenuItemHook):
         # setup menu entry for sidebar
         MenuItemHook.__init__(
             self,
-            _("corptax"),
+            "Corptax",
             "fas fa-cube fa-fw",
             "corptax:index",
             navactive=["corptax:"],
